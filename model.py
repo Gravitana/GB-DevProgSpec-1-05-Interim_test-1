@@ -39,16 +39,38 @@ def overwrite_all(data):
             file.write(note)
 
 
+def edit_note(new_row):
+    note = new_row.split(DATA_SEPARATOR)
+    note_id = int(note[0])
+    data = get_all()
+    result = False
+    for i, row in enumerate(data):
+        row_id = int(row.split(DATA_SEPARATOR)[0])
+        if row_id == note_id:
+            data[i] = new_row
+            result = True
+            break
+    overwrite_all(data)
+    return result
+
+
+def find_note(note_id, data):
+    for row in data:
+        row_id = int(row.split(DATA_SEPARATOR)[0])
+        if note_id == row_id:
+            return row
+    return None
+
+
 def delete_note(note_id):
     data = get_all()
-    was_deleted = False
+    result = False
     for row in data:
         row_id = int(row.split(DATA_SEPARATOR)[0])
         if note_id == row_id:
             data.remove(row)
-            was_deleted = True
+            result = True
             break
-    if was_deleted:
+    if result:
         overwrite_all(data)
-
-    return was_deleted
+    return result

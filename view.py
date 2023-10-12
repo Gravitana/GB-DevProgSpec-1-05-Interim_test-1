@@ -2,7 +2,10 @@ from config import DATA_SEPARATOR
 
 
 def input_num():
-    return int(input())
+    num = input()
+    if num == '':
+        return 0
+    return int(num)
 
 
 def input_data(message):
@@ -36,8 +39,12 @@ def show_error(message):
     print("╚════════╧════════════════════════════╝")
 
 
-def show_note(row):
-    print('║ {:3d} : {} – {}'.format(int(row[0]), row[1], row[2], ), end='')
+def show_note_inline(note):
+    print('║ {:3d} : {} – {}'.format(int(note[0]), note[1], note[2], ), end='')
+
+
+def show_note(note):
+    print('║ {:3d} : {} – {}'.format(int(note[0]), note[1], note[2]))
 
 
 def show_all(lst):
@@ -46,7 +53,7 @@ def show_all(lst):
         print("║            З А М Е Т К И            ║")
         print("╟─────────────────────────────────────╜")
         for row in lst:
-            show_note(row.split(DATA_SEPARATOR))
+            show_note_inline(row.split(DATA_SEPARATOR))
         print("╙─\n")
     else:
         show_error("Ничего не найдено")
